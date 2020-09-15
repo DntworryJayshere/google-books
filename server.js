@@ -1,6 +1,6 @@
 const express = require('express');
 
-const mongoose = require('mongoose');
+const connectDB = require('./config/db');
 const routes = require('./routes');
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -17,15 +17,7 @@ if (process.env.NODE_ENV === 'production') {
 app.use(routes);
 
 // Connect to the Mongo DB
-mongoose.connect(
-  process.env.MONGODB_URI ||
-    'mongodb://user1:password1@ds125871.mlab.com:25871/heroku_0xn0jnk7',
-  {
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-    useNewUrlParser: true,
-  }
-);
+connectDB();
 
 // Start the API server
 app.listen(PORT, () =>
